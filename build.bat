@@ -1,6 +1,7 @@
 @echo off
 
-docker build --tag msys .
+docker build --tag joelvaneenwyk/msys2 .
 if errorlevel 1 exit /b 2
 
-docker run -it msys
+docker push joelvaneenwyk/msys2
+docker run -it joelvaneenwyk/msys2
