@@ -19,10 +19,24 @@ RUN echo Finished initial setup.
 RUN pacman --noconfirm -Syuu
 RUN pacman --noconfirm -Syuu
 RUN pacman --noconfirm -Scc
+RUN pacman -S --quiet --noconfirm --needed `
+    msys2-devel msys2-runtime-devel msys2-keyring `
+    base-devel git autoconf automake1.16 automake-wrapper libtool libcrypt-devel openssl `
+    mingw-w64-x86_64-make mingw-w64-x86_64-gcc mingw-w64-x86_64-binutils `
+    texinfo texinfo-tex mingw-w64-x86_64-texlive-bin mingw-w64-x86_64-texlive-core mingw-w64-x86_64-texlive-extra-utils `
+    mingw-w64-x86_64-perl `
+    mingw-w64-x86_64-poppler
+
+ENV HOME C:\Users\ContainerAdministrator\
+ENV MSYS winsymlinks:nativestrict
 
 WORKDIR C:\Users\ContainerAdministrator\
 COPY ./ ./
-RUN cp -f nsswitch.conf /etc/nsswitch.conf
 RUN ./setup.sh
 
-ENTRYPOINT [ "C:\\msys64\\usr\\bin\\bash.exe", "-l" ]
+ENTRYPOINT [ `
+    "cmd", "/s", "/c", `
+    "C:\\msys64\\msys2_shell.cmd", `
+    "-no-start", "-msys2", "-defterm", "-shell", `
+    "bash", "-l" `
+]

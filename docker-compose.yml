@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  msys2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        buildno: 1
+    volumes:
+      - .:C:/Users/ContainerAdministrator/workspace
+    stdin_open: true
+    tty: true
