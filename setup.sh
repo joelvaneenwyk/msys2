@@ -8,6 +8,11 @@ pacman -S --quiet --noconfirm --needed \
     mingw-w64-x86_64-perl \
     mingw-w64-x86_64-poppler
 
+# Removing 'db' from these to improve performance on domain joined
+# machines, see https://gist.github.com/k-takata/9b8d143f0f3fef5abdab
+mkpasswd -l -c >/etc/passwd
+mkgroup -l -c >/etc/group
+
 cp -f nsswitch.conf /etc/nsswitch.conf
 
 export HOME=/c/Users/ContainerAdministrator

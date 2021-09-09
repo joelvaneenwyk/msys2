@@ -5,6 +5,11 @@ FROM mcr.microsoft.com/windows/servercore:20H2
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
+ENV HOME C:\Users\ContainerAdministrator
+ENV MSYS winsymlinks:nativestrict
+
+WORKDIR C:\Users\ContainerAdministrator
+
 RUN [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; `
     Invoke-WebRequest -UseBasicParsing -uri "https://github.com/msys2/msys2-installer/releases/download/nightly-x86_64/msys2-base-x86_64-latest.sfx.exe" -OutFile msys2.exe; `
     .\msys2.exe -y -oC:\; `
@@ -27,11 +32,11 @@ RUN pacman -S --quiet --noconfirm --needed `
     mingw-w64-x86_64-perl `
     mingw-w64-x86_64-poppler
 
-ENV HOME C:\Users\ContainerAdministrator\
-ENV MSYS winsymlinks:nativestrict
-
-WORKDIR C:\Users\ContainerAdministrator\
+# Copy at the end so that iteration time is faster if changes are made as the above
+# steps should not need an update.
 COPY ./ ./
+
+# Setup home directory and profile scripts.
 RUN ./setup.sh
 
 ENTRYPOINT [ `
