@@ -1,4 +1,7 @@
-version: "3.9"
+#
+# MSYS2
+#
+
 services:
   msys2:
     build:
