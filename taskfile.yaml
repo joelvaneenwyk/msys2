@@ -1,0 +1,28 @@
+# https://taskfile.dev
+
+version: "3"
+
+tasks:
+  default:
+    cmds:
+      - task: build
+
+  build:
+    cmds:
+      - cmd: 'git -C "{{ .TASKFILE_DIR }}" add .'
+      - task: docker-build
+
+  docker-build:
+    vars:
+      IMAGE_NAME: joelvaneenwyk/msys2
+      CONTAINER_NAME: msys2
+    cmds:
+      - cmd: 'docker build --tag "{{ .IMAGE_NAME }}" "{{ .TASKFILE_DIR }}\Dockerfile"'
+      - cmd: 'docker push "{{ .IMAGE_NAME }}"'
+      - cmd: 'docker run -it --rm --name "{{ .CONTAINER_NAME }}" -v "/nfs:/nfs:shared" -v "{{ fromSlash .TASKFILE_DIR }}:C:/Users/ContainerAdministrator/workspace" "{{ .IMAGE_NAME }}"'
+
+  up:
+    cmds:
+      - docker-compose down
+      - docker-compose up --detach
+      - docker-compose exec msys2 cmd
