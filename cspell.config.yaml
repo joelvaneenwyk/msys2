@@ -1,0 +1,11 @@
+version: "0.2"
+ignorePaths: []
+dictionaryDefinitions:
+  - name: cspell-msys2-dictionary
+    path: ./.vscode/cspell-msys2-dictionary.txt
+    addWords: true
+dictionaries:
+  - cspell-msys2-dictionary
+words: []
+ignoreWords: []
+import: []

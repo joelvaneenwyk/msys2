@@ -1,0 +1,12 @@
+# Custom Dictionary Words
+buildno
+buildx
+Buildx
+cmds
+fulcio
+Fulcio
+msys
+MSYS
+pywinauto
+Rekor
+texlive
