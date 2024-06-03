@@ -1,0 +1,4 @@
+act = "0.2.63"
+
+[plugins]
+act = "source:https://raw.githubusercontent.com/theomessin/proto-toml-plugins/master/act.toml"
